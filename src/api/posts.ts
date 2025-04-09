@@ -1,31 +1,26 @@
-import axios from "axios";
 import type { Post } from "../types";
-
-const api = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com",
-});
+import apiClient from "./client";
 
 export const fetchPosts = async (): Promise<Post[]> => {
-  const response = await api.get<Post[]>("/posts");
-  console.log(response, "hello");
+  const response = await apiClient.get<Post[]>("/posts");
   return response.data;
 };
 
 export const fetchPost = async (id: number): Promise<Post> => {
-  const response = await api.get<Post>(`/posts/${id}`);
+  const response = await apiClient.get<Post>(`/posts/${id}`);
   return response.data;
 };
 
 export const createPost = async (post: Omit<Post, "id">): Promise<Post> => {
-  const response = await api.post<Post>("/posts", post);
+  const response = await apiClient.post<Post>("/posts", post);
   return response.data;
 };
 
 export const updatePost = async (post: Post): Promise<Post> => {
-  const response = await api.put<Post>(`/posts/${post.id}`, post);
+  const response = await apiClient.put<Post>(`/posts/${post.id}`, post);
   return response.data;
 };
 
 export const deletePost = async (id: number): Promise<void> => {
-  await api.delete(`/posts/${id}`);
+  await apiClient.delete(`/posts/${id}`);
 };
